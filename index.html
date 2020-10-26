@@ -11,11 +11,11 @@
 
     <div class="wrapper grid">
         <div class="menu-container flex column">
-            <nav class="menu">
-                <button class="button active">The window</button>
-                <button class="button inactive">The door</button>
-                <button class="button inactive">The fireplace</button>
-                <button class="button inactive">The table</button>
+            <nav class="menu column">
+                <button class="button">The window</button>
+                <button class="button">The door</button>
+                <button class="button">The fireplace</button>
+                <button class="button">The table</button>
             </nav>
         </div>
         <div class="text flex center">
@@ -25,16 +25,21 @@
                 Where am I?<br>
             </p>
         </div>
-        <div class="options flex center">
-            <button class="button inactive">The table</button>
-            <button class="button inactive">The table</button>
+        <div class="options flex center row">
+            <button class="button first-option">Fumble around</button>
+            <button class="button second-option">Keep fumbling</button>
+            <div class="text-input-container column">
+                <label for="text-input"></label>
+                <input class="text-input" type="text" name="text-input" id="text-input">
+                <button class="button submit"></button>
+            </div>
         </div>
         <div class="secondary-menu-container flex column">
-            <nav class="secondary-menu">
-                <button class="button active">The newspaper</button>
-                <button class="button inactive">The key</button>
-                <button class="button inactive">The guestbook</button>
-                <button class="button inactive">The pen</button>
+            <nav class="secondary-menu column">
+                <button class="button">The newspaper</button>
+                <button class="button">The key</button>
+                <button class="button">The guestbook</button>
+                <button class="button">The pen</button>
             </nav>
         </div>
         <div class="footer flex">

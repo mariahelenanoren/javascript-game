@@ -2,7 +2,6 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-en
 }
 
 body {
@@ -14,6 +13,8 @@ body {
     Cantarell, 'Open Sans', 'Helvetica Neue',
     sans-serif;
 }
+
+/* GRID WRAPPER: inner body */
 
 .wrapper {
     height: 100%;
@@ -27,6 +28,8 @@ body {
     ;
 }
 
+/* MENU SECTION */
+
 .menu-container {
     padding: 0 2rem;
     justify-content: center;
@@ -36,9 +39,11 @@ body {
 }
 
 .menu {
-    width: 10rem;
+    width: 80%;
+    display: none;
 }
 
+/* TEXT SECTION */
 
 .text {
     text-align: center;
@@ -51,15 +56,37 @@ body {
 
 .text > * {
     align-self: flex-end;
-} 
+}
+
+/* OPTIONS SECTION */
 
 .options {
+    width: 100%;
     grid-area: options;
 }
 
 .options > * {
     align-self: flex-start;
-} 
+}
+
+.first-option {
+
+}
+
+.second-option {
+    display: none;
+}
+
+.text-input-container {
+    display: none;
+}
+
+.text-input {
+    padding: 0.2rem;
+    margin: 0.2rem;
+}
+
+/* SECONDARY MENU SECTION */
 
 .secondary-menu-container {
     padding: 0 2rem;
@@ -70,8 +97,11 @@ body {
 }
 
 .secondary-menu {
-    width: 10rem;
+    width: 80%;
+    display: none;
 }
+
+/* FOOTER SECTION*/
 
 .footer {
     height: 4rem;
@@ -111,16 +141,15 @@ body {
     justify-content: center;
 }
 
-/* Buttons */
+/* CLASSES FOR BUTTONS */
 
 .button {
-    flex: none;
+    width: 100%;
+    max-width: 11rem;
     padding: 0.7rem;
     margin: 0.2rem;
-    width: 10rem;
-    max-width: inherit;
-    text-align: center;
     font-size: 0.9rem;
+    background-color: #ebebeb;
     border: 0.1rem solid #1e1e1e;
 }
 
@@ -134,8 +163,4 @@ body {
 
 .active {
     background-color: #ffffff;
-}
-
-.inactive {
-    background-color: #ebebeb;
 }
