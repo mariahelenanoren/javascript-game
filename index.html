@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
     <title>Javascript Game</title>
 </head>
 <body>
@@ -19,14 +18,14 @@
             </nav>
         </div>
         <div class="text flex center">
-            <p>
+            <p class="text-inner">
                 Its dark<br>
                 I can't see anything.<br>
                 Where am I?<br>
             </p>
         </div>
         <div class="options flex center row">
-            <button class="button first-option">Fumble around</button>
+            <button onclick="findMatches()" class="button first-option">Fumble around</button>
             <button class="button second-option">Keep fumbling</button>
             <div class="text-input-container column">
                 <label for="text-input"></label>
@@ -45,8 +44,7 @@
         <div class="footer flex">
             <p>ESCAPE</p>
         </div>
-
     </div>
-
+<script src="script.js"></script>
 </body>
 </html>
