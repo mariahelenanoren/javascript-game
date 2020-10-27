@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Javascript Game</title>
+    <script defer src="script.js"></script>
 </head>
 <body>
 
@@ -25,8 +26,10 @@
             </p>
         </div>
         <div class="options flex center row">
-            <button class="button first-option">Fumble around</button>
-            <button class="button second-option">Keep fumbling</button>
+            <div id="buttons">
+                <button class="button buttonClass first-option"></button>
+                <button class="button buttonClass second-option"></button>
+            </div>
             <div class="text-input-container column">
                 <label for="text-input"></label>
                 <input class="text-input" type="text" name="text-input" id="text-input">
@@ -45,6 +48,5 @@
             <p>ESCAPE</p>
         </div>
     </div>
-<script src="script.js"></script>
 </body>
 </html>
