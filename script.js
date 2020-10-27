@@ -7,6 +7,7 @@ const button = [firstOption, secondOption]
 const menu = document.querySelector(".menu");
 const secondaryMenu = document.querySelector(".secondary-menu");
 const wrapper = document.querySelector(".wrapper");
+const footer = document.querySelector(".footer");
 
 let matchCounter = 2;
 
@@ -45,7 +46,9 @@ const actions = [
     },
     /* index 5 */
     pullString = {
-        description: "You pull the string.<br>The light goes on. You are in a cabin.<br>You can see a window, a door, a fireplace<br>and a table with some things on it."
+        description: "You pull the string.<br>The light goes on. You are in a cabin.<br>You can see a window, a door, a fireplace<br>and a table with some things on it.",
+        choices: [],
+        nextScene: []
     }
 ];
 
@@ -58,11 +61,18 @@ function changeDescription() {
 function changeButtons() {
     button[0].innerHTML = actions[currentScene].choices[0];
     button[1].innerHTML = actions[currentScene].choices[1];
-    if (actions[currentScene].nextScene.length < 2) { // Removes second button if only one choice exists
-        button[1].style = "display:none";
+    if (actions[currentScene].nextScene.length === 1) { // Removes second button if only one choice exists
+        button[1].style.display = "none";
+    }
+    else if (actions[currentScene].nextScene.length === 0) {
+        button[0].style.display = "none";
+        button[1].style.display = "none";
+        wrapper.setAttribute( "style", "align-items: center; grid-template-areas: 'menu text secondary-menu''menu text secondary-menu''footer footer footer'")
+        //wrapper.style = "";
     }
     else {
-        button[1].style = "display:unset";
+        button[0].style.display = "unset";
+        button[1].style.display = "unset";
     }
 }
 
@@ -92,5 +102,15 @@ function changeScene(answer) {
     if (answer === actions[2].choices[1]) {
         matchCounter--;
     }
+
+ if (currentScene > 4 ) {
+        wrapper.style.backgroundColor = "white";
+        text.style.color = "black";
+        footer.setAttribute("style", "border-top: 1px solid black; color: black")
+        menu.style.display = "unset";
+    }
+
     console.log(matchCounter);
+    console.log("scene: " + currentScene);
+    return currentScene;
 }

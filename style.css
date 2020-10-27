@@ -48,14 +48,11 @@ body {
 .text {
     text-align: center;
     grid-area: text;
+    align-items: flex-end!important;
 }
 
 .text p {
     color: white;
-}
-
-.text > * {
-    align-self: flex-end;
 }
 
 /* OPTIONS SECTION */
