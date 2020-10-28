@@ -9,6 +9,14 @@ const secondaryMenu = document.querySelector(".secondary-menu");
 const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
 
+menuButtons = [
+    windowBtn = document.querySelector("#window"),
+    doorBtn = document.querySelector("#door"),
+    fireplaceBtn = document.querySelector("#fireplace"),
+    tableBtn = document.querySelector("#table"),
+];
+
+
 let matchCounter = 2;
 
 currentScene = 0;
@@ -16,41 +24,66 @@ currentScene = 0;
 const actions = [
     /* index 0 */
     startScene = {
-        description: "Its dark<br>I can't see anything.<br>Where am I?<br>",
+        description: "It's dark<br>I can't see anything.<br>Where am I?<br>",
         choices: ["Fumble in the dark"],
         nextScene: [1]
     },
     /* index 1 */
     findMatchbox = {
-        description: "You find a matchbox.<br> You can feel two matches inside.",
+        description: "I find a matchbox.<br>I can feel two matches inside.",
         choices: ["Light a match", "Keep fumbling"],
         nextScene: [2, 4]
     },
     /* index 2 */
     lightMatch = {
-        description: "You light a match.<br>You can see a string in front of you.",
+        description: "I light a match.<br>I can see a string in front of me.",
         choices: ["Pull string", "Light another match"],
         nextScene: [5, 3]
     },
     /* index 3 */
     lightAnotherMatch = {
-        description: "You light another match.<br>You can still only see the string in front of you.<br>You are out of matches.",
+        description: "I light another match.<br>I can still only see the string in front of me.<br>I am out of matches.",
         choices: ["Pull string"],
         nextScene: [5]
     },
     /* index 4 */
     keepFumbling = {
-        description: "You keep fumbling around in the dark.<br>You can feel a string infront of you.",
+        description: "I keep fumbling around in the dark.<br>I can feel a string infront of me.",
         choices: ["Pull string", "Light a match"],
         nextScene: [5, 2]
     },
     /* index 5 */
     pullString = {
-        description: "You pull the string.<br>The light goes on. You are in a cabin.<br>You can see a window, a door, a fireplace<br>and a table with some things on it.",
+        description: "I pull the string.<br>The light goes on. I am in a cabin.<br>I can see a window, a door, a fireplace<br>and a table with some things on it.",
+        choices: [],
+        nextScene: []
+    },
+    /* index 6 */
+    theWindow = {
+        description: "I look out.<br>There is snow as far as the eye can see.",
+        choices: [],
+        nextScene: []
+    },
+    /* index 7 */
+    theDoor = {
+        description: "The door looks old.",
+        choices: [],
+        nextScene: []
+    },
+    /* index 8 */
+    theFireplace = {
+        description: "the Fireplace",
+        choices: [],
+        nextScene: []
+    },
+    /* index 9 */
+    theTable = {
+        description: "the Table",
         choices: [],
         nextScene: []
     }
 ];
+
 
 window.onload = changeDescription(), changeButtons();
 
@@ -63,12 +96,13 @@ function changeButtons() {
     button[1].innerHTML = actions[currentScene].choices[1];
     if (actions[currentScene].nextScene.length === 1) { // Removes second button if only one choice exists
         button[1].style.display = "none";
+        button[0].style.display = "unset"
+        wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
     }
     else if (actions[currentScene].nextScene.length === 0) {
         button[0].style.display = "none";
         button[1].style.display = "none";
         wrapper.setAttribute( "style", "align-items: center; grid-template-areas: 'menu text secondary-menu''menu text secondary-menu''footer footer footer'")
-        //wrapper.style = "";
     }
     else {
         button[0].style.display = "unset";
@@ -96,21 +130,64 @@ function changeScene(answer) {
         changeButtons();
     }
 
-    if (answer === actions[1].choices[0]) {
-        matchCounter--;
-    }
-    if (answer === actions[2].choices[1]) {
+    if (answer === actions[1].choices[0] || answer === actions[2].choices[1]) {
         matchCounter--;
     }
 
- if (currentScene > 4 ) {
-        wrapper.style.backgroundColor = "white";
-        text.style.color = "black";
-        footer.setAttribute("style", "border-top: 1px solid black; color: black")
-        menu.style.display = "unset";
+    if (currentScene > 4 ) {
+        changeSceneColors();
     }
 
     console.log(matchCounter);
     console.log("scene: " + currentScene);
-    return currentScene;
+}
+
+function changeSceneColors() {
+    wrapper.style.backgroundColor = "white";
+    text.style.color = "black";
+    footer.setAttribute("style", "border-top: 1px solid black; color: black")
+    menu.style.display = "unset";
+}
+
+let menuBtn = document.querySelector('#menu');
+    document.addEventListener('click', e => {
+      if (e.target.matches('button')) {
+        const chosenMenu = e.target.innerHTML;
+        clickedMenuButtons(chosenMenu);
+      }
+    });
+
+function clickedMenuButtons(button) {
+    if (button === "The window") {
+        currentScene = 6;
+        changeDescription();
+        changeButtons();
+        changeSceneColors();
+    }
+    else if (button === "The door") {
+        currentScene = 7;
+        changeDescription();
+        changeButtons();
+        changeSceneColors();
+    } 
+    else if (button === "The fireplace") {
+        currentScene = 8;
+        changeDescription();
+        changeButtons();
+        changeSceneColors();
+    } 
+    else if (button === "The table") {
+        currentScene = 9;
+        changeDescription();
+        changeButtons();
+        changeSceneColors();
+    } 
+}
+
+fireIsBurning = false;
+
+if (fireIsBurning !== true) {
+    actions[6].description = "I look out.<br>There is snow as far as the eye can see.<br>The window is frosty.<br>";
+    actions[6].choices.push("Write a message");
+    actions[6].nextScene.push(10);
 }

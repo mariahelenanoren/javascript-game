@@ -19,6 +19,7 @@ body {
 .wrapper {
     height: 100%;
     background-color: #1e1e1e;
+    transition: background-color 1s ease-in-out;
     grid-template-columns: 0.8fr 1.4fr 0.8fr;
     grid-template-rows: 1fr 1fr 4rem;
     grid-template-areas: 
