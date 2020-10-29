@@ -81,6 +81,12 @@ const actions = [
         description: "the Table",
         choices: [],
         nextScene: []
+    },
+    /* index 10 */
+    writeMessage = {
+        description: "I look out.<br>There is snow as far as the eye can see.",
+        choices: [],
+        nextScene: []
     }
 ];
 
@@ -110,7 +116,7 @@ function changeButtons() {
     }
 }
 
-let btn = document.querySelector('#buttons');
+let btn = document.querySelector('.button-container');
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
         const chosenAnswer = e.target.innerHTML;
@@ -129,6 +135,36 @@ function changeScene(answer) {
         changeDescription();
         changeButtons();
     }
+    else {
+        if (answer === "The window") {
+            currentScene = 6;
+            console.log("clickedMenuButtons currentScene: " + currentScene)
+            changeDescription();
+            changeButtons();
+            changeSceneColors();
+        }
+        else if (answer === "The door") {
+            currentScene = 7;
+            console.log("clickedMenuButtons currentScene: " + currentScene)
+            changeDescription();
+            changeButtons();
+            changeSceneColors();
+        } 
+        else if (answer === "The fireplace") {
+            currentScene = 8;
+            console.log("clickedMenuButtons currentScene: " + currentScene)
+            changeDescription();
+            changeButtons();
+            changeSceneColors();
+        } 
+        else if (answer === "The table") {
+            currentScene = 9;
+            console.log("clickedMenuButtons currentScene: " + currentScene)
+            changeDescription();
+            changeButtons();
+            changeSceneColors();
+        } 
+    }
 
     if (answer === actions[1].choices[0] || answer === actions[2].choices[1]) {
         matchCounter--;
@@ -139,7 +175,8 @@ function changeScene(answer) {
     }
 
     console.log(matchCounter);
-    console.log("scene: " + currentScene);
+    console.log("changeScene currentScene: " + currentScene);
+    console.log(answer);
 }
 
 function changeSceneColors() {
@@ -147,41 +184,6 @@ function changeSceneColors() {
     text.style.color = "black";
     footer.setAttribute("style", "border-top: 1px solid black; color: black")
     menu.style.display = "unset";
-}
-
-let menuBtn = document.querySelector('#menu');
-    document.addEventListener('click', e => {
-      if (e.target.matches('button')) {
-        const chosenMenu = e.target.innerHTML;
-        clickedMenuButtons(chosenMenu);
-      }
-    });
-
-function clickedMenuButtons(button) {
-    if (button === "The window") {
-        currentScene = 6;
-        changeDescription();
-        changeButtons();
-        changeSceneColors();
-    }
-    else if (button === "The door") {
-        currentScene = 7;
-        changeDescription();
-        changeButtons();
-        changeSceneColors();
-    } 
-    else if (button === "The fireplace") {
-        currentScene = 8;
-        changeDescription();
-        changeButtons();
-        changeSceneColors();
-    } 
-    else if (button === "The table") {
-        currentScene = 9;
-        changeDescription();
-        changeButtons();
-        changeSceneColors();
-    } 
 }
 
 fireIsBurning = false;

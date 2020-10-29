@@ -67,7 +67,7 @@ body {
     align-self: flex-start;
 }
 
-#buttons {
+.button-container {
     width: 100%;
 }
 
@@ -80,11 +80,19 @@ body {
 
 .text-input-container {
     display: none;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
 }
 
 .text-input {
+    width: 100%;
     padding: 0.2rem;
     margin: 0.2rem;
+}
+
+.submit {
+    width: 100%;
 }
 
 /* SECONDARY MENU SECTION */
