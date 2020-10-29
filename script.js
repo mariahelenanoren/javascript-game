@@ -3,11 +3,14 @@ const text = document.querySelector(".text-inner");
 const firstOption = document.querySelector(".first-option");
 const secondOption = document.querySelector(".second-option");
 const button = [firstOption, secondOption]
+const buttonWrapper = document.querySelector(".button-container")
 
 const menu = document.querySelector(".menu");
 const secondaryMenu = document.querySelector(".secondary-menu");
 const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
+
+const inputMessage = document.querySelector(".text-input-container");
 
 menuButtons = [
     windowBtn = document.querySelector("#window"),
@@ -15,7 +18,6 @@ menuButtons = [
     fireplaceBtn = document.querySelector("#fireplace"),
     tableBtn = document.querySelector("#table"),
 ];
-
 
 let matchCounter = 2;
 
@@ -84,12 +86,11 @@ const actions = [
     },
     /* index 10 */
     writeMessage = {
-        description: "I look out.<br>There is snow as far as the eye can see.",
+        description: "The frost feels cold against my fingers.",
         choices: [],
         nextScene: []
     }
 ];
-
 
 window.onload = changeDescription(), changeButtons();
 
@@ -103,16 +104,19 @@ function changeButtons() {
     if (actions[currentScene].nextScene.length === 1) { // Removes second button if only one choice exists
         button[1].style.display = "none";
         button[0].style.display = "unset"
+        buttonWrapper.style.display = "flex";
         wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
     }
     else if (actions[currentScene].nextScene.length === 0) {
         button[0].style.display = "none";
         button[1].style.display = "none";
+        buttonWrapper.style.display = "none";
         wrapper.setAttribute( "style", "align-items: center; grid-template-areas: 'menu text secondary-menu''menu text secondary-menu''footer footer footer'")
     }
     else {
         button[0].style.display = "unset";
         button[1].style.display = "unset";
+        buttonWrapper.style.display = "flex";
     }
 }
 
@@ -164,6 +168,13 @@ function changeScene(answer) {
             changeButtons();
             changeSceneColors();
         } 
+        else if (answer === "Done") {
+            currentScene = 11;
+            console.log("clickedMenuButtons currentScene: " + currentScene)
+            changeDescription();
+            changeButtons();
+            changeSceneColors();
+        } 
     }
 
     if (answer === actions[1].choices[0] || answer === actions[2].choices[1]) {
@@ -171,6 +182,12 @@ function changeScene(answer) {
     }
 
     if (currentScene > 4 ) {
+        changeSceneColors();
+    }
+
+    if (currentScene === 10) {
+        inputMessage.style.display = "flex";
+        wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
         changeSceneColors();
     }
 
