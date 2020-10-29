@@ -11,8 +11,8 @@ const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
 const subButton = document.querySelector(".submit");
 
-const messageInput = document.createElement("input");
-const nameInput = document.createElement("input");
+let messageInput = document.createElement("input");
+let nameInput = document.createElement("input");
 const element = document.querySelector(".user-inputs");
 
 let nameWritteninGuestbook = false;
@@ -72,8 +72,8 @@ const actions = [
     /* index 6 */
     theWindow = {
         description: "I look out.<br>There is snow as far as the eye can see.",
-        choices: [],
-        nextScene: []
+        choices: ["Write a message"],
+        nextScene: [10]
     },
     /* index 7 */
     theDoor = {
@@ -83,9 +83,9 @@ const actions = [
     },
     /* index 8 */
     theFireplace = {
-        description: "the Fireplace",
-        choices: [],
-        nextScene: []
+        description: "The cabin is cold.<br>There is firewood next to the fireplace.",
+        choices: ["Put wood in the fireplace"],
+        nextScene: [19]
     },
     /* index 9 */
     theTable = {
@@ -124,21 +124,21 @@ const actions = [
         nextScene: []
     },
     /* index 15 */
-    theKey = {
+    theBronzeKey = {
         description: "A bronze key.",
-        choices: ["Pick up the key"],
+        choices: ["Pick up the bronze key"],
         nextScene: [15]
     },
     /* index 16 */
     theGuestbook = {
         description: "The newest entry is from 1962.<br>It was signed by Walter Buck.",
         choices: ["Sign the guestbook"],
-        nextScene: [18]
+        nextScene: [21]
     },
     /* index 17 */
     thePen = {
         description: "A regular pen.",
-        choices: ["Pick up the Pen"],
+        choices: ["Pick up the pen"],
         nextScene: [17]
     },
     /* index 18 */
@@ -146,6 +146,24 @@ const actions = [
         description: "Should I really sign my real name,<br> I still don't know how I got here...",
         choices: ["Done"],
         nextScene: [16]
+    },
+    /* index 19 */
+    putWood = {
+        description: "I put a couple of logs in the fireplace.<br>Underneith there lays a silver key.",
+        choices: ["Pick up the silver key"],
+        nextScene: [20]
+    },
+    /* index 20 */
+    pickUpSilverKey = {
+        description: "I put the silver key in my pocket.",
+        choices: ["Light the fireplace"],
+        nextScene: [8]
+    },
+    /* index 21 */
+    noPenGuestbook = {
+        description: "I don't have a pen to write in the guestbook with.",
+        choices: [],
+        nextScene: []
     }
 ];
 
@@ -177,25 +195,6 @@ function changeButtons() {
     }
 }
 
-/*subButton.addEventListener("click", getMessage);
-
-function getMessage() {
-    let message = document.querySelector("#input-message").value;
-    let name = document.querySelector("#input-message").value;
-    messageWrittenOnWindow = true;
-    nameWritteninGuestbook = true;
-    if (messageWrittenOnWindow === true) {
-        actions[6].description = "The window says: " + message;
-        actions[6].choices = [];
-        actions[6].nextScene = [];
-    }
-    if (messageWrittenOnWindow === true) {
-        actions[16].description = "I decided to write " + name + "in the guestbook.";
-        actions[16].choices = [];
-        actions[16].nextScene = [];
-    }
-}*/
-
 let btn = document.querySelector('.button-container');
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
@@ -221,7 +220,6 @@ function changeScene(answer) {
             console.log("clickedMenuButtons currentScene: " + currentScene)
             changeDescription();
             changeButtons();
-            changeSceneColors();
             secondaryMenu.style.display = "none";
         }
         else if (answer === "The door") {
@@ -229,7 +227,6 @@ function changeScene(answer) {
             console.log("clickedMenuButtons currentScene: " + currentScene)
             changeDescription();
             changeButtons();
-            changeSceneColors();
             secondaryMenu.style.display = "none";
         } 
         else if (answer === "The fireplace") {
@@ -237,7 +234,6 @@ function changeScene(answer) {
             console.log("clickedMenuButtons currentScene: " + currentScene)
             changeDescription();
             changeButtons();
-            changeSceneColors();
             secondaryMenu.style.display = "none";
         } 
         else if (answer === "The table") {
@@ -245,7 +241,6 @@ function changeScene(answer) {
             console.log("clickedMenuButtons currentScene: " + currentScene)
             changeDescription();
             changeButtons();
-            changeSceneColors();
             secondaryMenu.style.display = "flex";
         }
         else {
@@ -276,14 +271,46 @@ function changeScene(answer) {
         matchCounter--;
     }
 
+    if (answer === "Pick up the pen") {
+        pickedUpPen();
+        if (penObtained === true) {
+            changeGuestbook();
+        }
+    }
+
+    if (answer === "Pick up the bronze key") {
+        pickedUpBronzeKey();
+    }
+
+    if (answer === "Pick up the silver key") {
+        pickedUpSilverKey();
+    }
+
+    if (answer === "Light the fireplace") {
+        checkMatches();
+        if (fireIsBurning === true) {
+            defrostWindow();
+        }
+        if (fireIsBurning === false) {
+            changeFireplaceScene();
+        }
+    }
+
+    if (answer === "Done") {
+        getInput();
+    }
+
     if (currentScene === 10) {
     element.appendChild(messageInput);
-    messageInput.setAttribute("style", "display:flex; width: 80%")
+    messageInput.setAttribute("style", "display:flex; width: 80%");
+    nameInput.style.display = "none";
     }
     else if (currentScene === 18) {
     element.appendChild(nameInput);
-    nameInput.setAttribute("style", "display:flex; width: 80%")
+    nameInput.setAttribute("style", "display:flex; width: 80%");
+    messageInput.style.display = "none";
     }
+
     else {
         messageInput.style.display = "none";
         nameInput.style.display = "none";
@@ -292,8 +319,10 @@ function changeScene(answer) {
     if (currentScene > 4 ) {
         changeSceneColors();
     }
-
-    console.log(matchCounter);
+    console.log("fire: " + fireIsBurning)
+    console.log("keys: " + keysObtained)
+    console.log("pen: " + penObtained)
+    console.log("matches: " + matchCounter);
     console.log("changeScene currentScene: " + currentScene);
     console.log(answer);
 }
@@ -305,8 +334,79 @@ function changeSceneColors() {
     menu.style.display = "unset";
 }
 
-if (fireIsBurning !== true) {
-    actions[6].description = "I look out.<br>There is snow as far as the eye can see.<br>The window is frosty.<br>";
-    actions[6].choices.push("Write a message");
-    actions[6].nextScene.push(10);
+function getInput() {
+    let userInputMessage = messageInput.value;
+    let userInputName = nameInput.value;
+    if (userInputMessage !== "") {
+        showInputMessage(userInputMessage);
+    }
+    if (userInputName !== "") {
+        showInputName(userInputName);
+    }
+    changeDescription();
+    changeButtons();
+}
+
+function showInputMessage(message) {
+    actions[6].description = "The window says: " + message;
+    actions[6].choices = [];
+    actions[6].nextScene = [];
+}
+function showInputName(name) {
+    actions[16].description = "I decided to write " + name + "in the guestbook.";
+    actions[16].choices = [];
+    actions[16].nextScene = [];
+}
+
+function pickedUpPen() {
+    penObtained = true;
+    actions[17].description = "I put the pen in my pocket.";
+    actions[17].choices = [];
+    actions[17].nextScene = [];
+    changeDescription();
+    changeButtons();
+}
+
+function pickedUpBronzeKey() {
+    keysObtained.push("bronzeKey");
+    actions[15].description = "I put the bronze key in my pocket.";
+    actions[15].choices = [];
+    actions[15].nextScene = [];
+    changeDescription();
+    changeButtons();
+}
+
+function pickedUpSilverKey() {
+    keysObtained.push("silverKey");
+}
+
+function changeGuestbook() {
+    actions[16].nextScene = [18];
+    changeDescription();
+    changeButtons();
+}
+
+function defrostWindow() {
+    actions[8].description = "The fire is burning.<br>The cabin is slowly getting warmer.";
+    actions[8].choices = []
+    actions[8].nextScene = [];
+    changeDescription();
+    changeButtons();
+}
+
+function checkMatches() {
+    if (matchCounter > 0) {
+        fireIsBurning = true;
+    }
+    else {
+        fireIsBurning = false;
+    }
+}
+
+function changeFireplaceScene() {
+    actions[8].description = "The cabin is cold.<br>I have no matches to light the fireplace with.";
+    actions[8].choices = [];
+    actions[8].nextScene = [];
+    changeDescription();
+    changeButtons();
 }
