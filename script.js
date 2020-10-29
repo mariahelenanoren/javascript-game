@@ -9,6 +9,7 @@ const menu = document.querySelector(".menu");
 const secondaryMenu = document.querySelector(".secondary-menu");
 const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
+const subButton = document.querySelector(".submit");
 
 const inputMessage = document.querySelector(".text-input-container");
 
@@ -19,8 +20,10 @@ menuButtons = [
     tableBtn = document.querySelector("#table"),
 ];
 
-let matchCounter = 2;
+let fireIsBurning = false;
+let messageWrittenOnWindow = false;
 
+let matchCounter = 2;
 currentScene = 0;
 
 const actions = [
@@ -69,8 +72,8 @@ const actions = [
     /* index 7 */
     theDoor = {
         description: "The door looks old.",
-        choices: [],
-        nextScene: []
+        choices: ["Try turning the handle"],
+        nextScene: [12]
     },
     /* index 8 */
     theFireplace = {
@@ -87,6 +90,18 @@ const actions = [
     /* index 10 */
     writeMessage = {
         description: "The frost feels cold against my fingers.",
+        choices: ["Done"],
+        nextScene: [11]
+    },
+    /* index 11 */
+    writtenMessage = {
+        description: "The window says: ",
+        choices: [],
+        nextScene: []
+    },
+    /* index 12 */
+    turningHandleNoKey = {
+        description: "The door seems to be locked.</br>Perhaps there is ",
         choices: [],
         nextScene: []
     }
@@ -117,6 +132,19 @@ function changeButtons() {
         button[0].style.display = "unset";
         button[1].style.display = "unset";
         buttonWrapper.style.display = "flex";
+    }
+}
+
+subButton.addEventListener("click", getMessage);
+
+function getMessage() {
+    let message = document.querySelector("#input-message").value;
+    actions[11].description += message;
+    messageWrittenOnWindow = true;
+    if (messageWrittenOnWindow === true) {
+        actions[6].description = "The window says: " + message;
+        actions[6].choices = [];
+        actions[6].nextScene = [];
     }
 }
 
@@ -167,14 +195,7 @@ function changeScene(answer) {
             changeDescription();
             changeButtons();
             changeSceneColors();
-        } 
-        else if (answer === "Done") {
-            currentScene = 11;
-            console.log("clickedMenuButtons currentScene: " + currentScene)
-            changeDescription();
-            changeButtons();
-            changeSceneColors();
-        } 
+        }
     }
 
     if (answer === actions[1].choices[0] || answer === actions[2].choices[1]) {
@@ -187,8 +208,10 @@ function changeScene(answer) {
 
     if (currentScene === 10) {
         inputMessage.style.display = "flex";
-        wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
-        changeSceneColors();
+        buttonWrapper.style.display = "none"
+    }
+    else {
+        inputMessage.style.display = "none";
     }
 
     console.log(matchCounter);
@@ -202,8 +225,6 @@ function changeSceneColors() {
     footer.setAttribute("style", "border-top: 1px solid black; color: black")
     menu.style.display = "unset";
 }
-
-fireIsBurning = false;
 
 if (fireIsBurning !== true) {
     actions[6].description = "I look out.<br>There is snow as far as the eye can see.<br>The window is frosty.<br>";
