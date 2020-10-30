@@ -1,23 +1,26 @@
-const text = document.querySelector(".text-inner");
-
 const firstOption = document.querySelector(".first-option");
 const secondOption = document.querySelector(".second-option");
+/** 
+ * An array for the option buttons 
+ * @type {Array}
+ * */
 const button = [firstOption, secondOption]
 const buttonWrapper = document.querySelector(".button-container")
 
+const text = document.querySelector(".text-inner");
 const menu = document.querySelector(".menu");
 const secondaryMenu = document.querySelector(".secondary-menu");
-
 const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
-const subButton = document.querySelector(".submit");
 
 let messageInput = document.createElement("input");
 let nameInput = document.createElement("input");
 const element = document.querySelector(".user-inputs");
 
-let nameWritteninGuestbook = false;
-
+/** 
+ * An array of variables for the menu buttons
+ * @type {Array}
+ */
 menuButtons = [
     windowBtn = document.querySelector("#window"),
     doorBtn = document.querySelector("#door"),
@@ -26,13 +29,18 @@ menuButtons = [
 ];
 
 let fireIsBurning = false;
+let nameWritteninGuestbook = false;
 let messageWrittenOnWindow = false;
-let keysObtained = [] //push the keys, if right key is obtained door can be opened
 let penObtained = false;
-
+let keysObtained = [];
 let matchCounter = 2;
+
 currentScene = 0;
 
+/**
+ * An array of all the scenes. The scenes are objects with a description, choices and the following scene
+ * @type {Array{description: string, choices: string, nextScene: number}}
+ */
 const actions = [
     /* index 0 */
     startScene = {
@@ -180,21 +188,30 @@ const actions = [
     }
 ];
 
+/**
+ * Changes the descrition and buttons as soon as the page has been loaded
+ */
 window.onload = changeDescription(), changeButtons();
 
+/**
+ * Changes the description to fit the current scene
+ */
 function changeDescription() {
     text.innerHTML = actions[currentScene].description;
 }
 
+/**
+ * Changes the buttons to fit the choices of the current scene
+ */
 function changeButtons() {
     button[0].innerHTML = actions[currentScene].choices[0];
     button[1].innerHTML = actions[currentScene].choices[1];
-    if (actions[currentScene].nextScene.length === 1) { // Removes second button if only one choice exists
+    if (actions[currentScene].choices.length === 1) {
         button[1].style.display = "none";
         button[0].style.display = "unset"
         buttonWrapper.style.display = "flex";
     }
-    else if (actions[currentScene].nextScene.length === 0) {
+    else if (actions[currentScene].choices.length === 0) {
         button[0].style.display = "none";
         button[1].style.display = "none";
         buttonWrapper.style.display = "none";
@@ -206,6 +223,9 @@ function changeButtons() {
     }
 }
 
+/**
+ * When a button is pressed the innerHTML of the button is sent to changeScene()
+ */
 let btn = document.querySelector('.button-container');
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
@@ -214,6 +234,10 @@ let btn = document.querySelector('.button-container');
       }
     });
 
+/**
+ * Changes the scene based of the button pressed by the player
+ * @param {string} answer the innerHTML of the button which triggered the function
+ */
 function changeScene(answer) {
     if (answer === actions[currentScene].choices[0]) {
         currentScene = actions[currentScene].nextScene[0];
@@ -274,65 +298,84 @@ function changeScene(answer) {
         }
     }
 
+    /** Removes a matchstick if the player lights one */
     if (answer === actions[1].choices[0] || answer === actions[2].choices[1]) {
         matchCounter--;
     }
 
+    /**
+    * If player clicked on the button to pick up pen, trigger pickedUpPen()
+    */
     if (answer === "Pick up the pen") {
         pickedUpPen();
+        /** If pen has been obtained, trigger changeGuestbook() */
         if (penObtained === true) {
             changeGuestbook();
         }
     }
 
+    /** If player clicked on the button to pick up bronze key, trigger pickedUpBronzeKey() */
     if (answer === "Pick up the bronze key") {
         pickedUpBronzeKey();
     }
-
+    /** If player clicked on the button to pick up silver key, trigger function pickedUpSilverKey() */
     if (answer === "Pick up the silver key") {
         pickedUpSilverKey();
     }
 
+    /** 
+     * If player clicked on the button to light the fireplace, check if player still has matches
+     */
     if (answer === "Light the fireplace") {
         checkMatches();
+        /** If fire is burning, defrost the window */
         if (fireIsBurning === true) {
             defrostWindow();
         }
+        /** If fire is not burning, change the fireplace scene */
         if (fireIsBurning === false) {
             changeFireplaceScene();
         }
     }
 
+    /** If player clicked on the "Done" button, get the input */
     if (answer === "Done") {
         getInput();
     }
 
+    /** If player clicked button to try turning the handle, check if player has obtained keys */
     if (answer === "Try turning the handle") {
         checkKeys();
     }
 
+    /** If the current scene is the writeWindow scene, create message input */
     if (currentScene === 10) {
-        showMessageInputBox();
+        createMessageInput();
     }
+    /** If the current scene is the signTheGuestbook scene, create name input */
     else if (currentScene === 18) {
-        showNameInputBox();
+        createNameInput();
     }
     else {
         messageInput.style.display = "none";
         nameInput.style.display = "none";
     }
 
+    /** If the current scene is after the light has been turned on, change scene colors to light */
     if (currentScene > 4 ) {
         changeSceneColors();
     }
+    /** If the current scene is before the light has been turned on, change scene colors to dark */
     else {
         wrapper.style.backgroundColor = "#1e1e1e";
         text.style.color = "white";
         footer.setAttribute("style", "border-top: 1px solid white; color: white");
     }
-    console.log("currentScene: " + currentScene)
 }
 
+/**
+ * Changes colors based on the scene
+ */
 function changeSceneColors() {
     wrapper.style.backgroundColor = "white";
     text.style.color = "black";
@@ -345,6 +388,27 @@ function changeSceneColors() {
     }
 }
 
+/**
+ * Creates an input field for the window scene
+ */
+function createMessageInput() {
+    element.appendChild(messageInput);
+    messageInput.setAttribute("style", "display:flex; width: 80%");
+    nameInput.style.display = "none";
+}
+
+/**
+ * Creates an input field for the window scene
+ */
+function createNameInput() {
+    element.appendChild(nameInput);
+    nameInput.setAttribute("style", "display:flex; width: 80%");
+    messageInput.style.display = "none";
+}
+
+/**
+ * Fetches the text the player has written into the input fields
+ */
 function getInput() {
     let userInputMessage = messageInput.value;
     let userInputName = nameInput.value;
@@ -354,33 +418,36 @@ function getInput() {
     if (userInputName !== "") {
         showInputName(userInputName);
     }
-    changeDescription();
-    changeButtons();
 }
 
-function showMessageInputBox() {
-    element.appendChild(messageInput);
-    messageInput.setAttribute("style", "display:flex; width: 80%");
-    nameInput.style.display = "none";
-}
 
-function showNameInputBox() {
-    element.appendChild(nameInput);
-    nameInput.setAttribute("style", "display:flex; width: 80%");
-    messageInput.style.display = "none";
-}
-
+/**
+ * Updates the window scene and displays the message
+ * @param {string} message input value given by the player
+ */
 function showInputMessage(message) {
     actions[6].description = "The window says: " + message;
     actions[6].choices = [];
     actions[6].nextScene = [];
+    changeDescription();
+    changeButtons();
 }
+
+/**
+ * Updates the guestbook scene and displays the name
+ * @param {string} name input value given by the player 
+ */
 function showInputName(name) {
     actions[16].description = "I decided to write " + name + " in the guestbook.";
     actions[16].choices = [];
     actions[16].nextScene = [];
+    changeDescription();
+    changeButtons();
 }
 
+/**
+ * Changes value of penObtained to true and changes the pen scene
+ */
 function pickedUpPen() {
     penObtained = true;
     actions[17].description = "I put the pen in my pocket.";
@@ -390,6 +457,9 @@ function pickedUpPen() {
     changeButtons();
 }
 
+/**
+ * Adds bronzeKey to the array keysObtained and changes the bronze key scene
+ */
 function pickedUpBronzeKey() {
     keysObtained.push("bronzeKey");
     actions[15].description = "I put the bronze key in my pocket.";
@@ -399,16 +469,25 @@ function pickedUpBronzeKey() {
     changeButtons();
 }
 
+/**
+ * Adds silverKey to the array keysObtained
+ */
 function pickedUpSilverKey() {
     keysObtained.push("silverKey");
 }
 
+/**
+ * Changes the guestbook scene
+ */
 function changeGuestbook() {
     actions[16].nextScene = [18];
     changeDescription();
     changeButtons();
 }
 
+/**
+ * Changes the fireplace and window scene
+ */
 function defrostWindow() {
     actions[8].description = "The fire is burning.<br>The cabin is slowly getting warmer.";
     actions[8].choices = []
@@ -420,6 +499,9 @@ function defrostWindow() {
     changeButtons();
 }
 
+/**
+ * If the player still has matches, light the fire
+ */
 function checkMatches() {
     if (matchCounter > 0) {
         fireIsBurning = true;
@@ -429,6 +511,9 @@ function checkMatches() {
     }
 }
 
+/**
+ * Changes the fireplace scene
+ */
 function changeFireplaceScene() {
     actions[8].description = "I have no matches to light the fireplace with.<br>The cabin is cold.";
     actions[8].choices = [];
@@ -437,6 +522,9 @@ function changeFireplaceScene() {
     changeButtons();
 }
 
+/**
+ * Checks which keys has been obtained and triggers seperate functions
+ */
 function checkKeys() {
     if (keysObtained.includes("bronzeKey") && keysObtained.length === 1) {
        openingDoorBronzeKey();
@@ -454,16 +542,27 @@ function checkKeys() {
     changeButtons();
 }
 
+/**
+ * Changes the door scene based on the bronze key being obtained
+ */
 function openingDoorBronzeKey() {
     actions[22].description = "The door is locked."
     actions[22].choices[0] = "Try the bronze key"
     actions[22].nextScene[0] = 13;
-} 
+}
+
+/**
+ * Changes the door scene based on the silver key being obtained
+ */
 function openingDoorSilverKey() {
     actions[22].description = "The door is locked."
     actions[22].choices[0] = "Try the silver key"
     actions[22].nextScene[0] = 12;
-} 
+}
+
+/**
+ * Changes the door scene based on both keys being obtained
+ */
 function openingDoorBothKeys() {
     actions[22].description = "The door is locked."
     actions[22].choices[0] = "Try the silver key"
@@ -472,6 +571,9 @@ function openingDoorBothKeys() {
     actions[22].nextScene[1] = 13;
 } 
 
+/**
+ * Changes the door scene based on no keys being obtained
+ */
 function openingDoorNoKeys() {
     actions[22].description = "The door is locked.<br>Perhaps there's a key somewhere."
     actions[22].choices = [];
