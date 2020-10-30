@@ -193,13 +193,11 @@ function changeButtons() {
         button[1].style.display = "none";
         button[0].style.display = "unset"
         buttonWrapper.style.display = "flex";
-        wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
     }
     else if (actions[currentScene].nextScene.length === 0) {
         button[0].style.display = "none";
         button[1].style.display = "none";
         buttonWrapper.style.display = "none";
-        wrapper.setAttribute( "style", "align-items: center; grid-template-areas: 'menu text secondary-menu''menu text secondary-menu''footer footer footer'")
     }
     else {
         button[0].style.display = "unset";
@@ -324,17 +322,11 @@ function changeScene(answer) {
         nameInput.style.display = "none";
     }
 
-    /*if (currentScene === 23) {
-        menu.style.display = "none!important";
-        secondaryMenu.style.display = "none!important";
-        console.log("twentytwo")
-    }*/
-
     if (currentScene > 4 ) {
         changeSceneColors();
     }
     else {
-        wrapper.style.backgroundColor = "black";
+        wrapper.style.backgroundColor = "#1e1e1e";
         text.style.color = "white";
         footer.setAttribute("style", "border-top: 1px solid white; color: white");
     }
@@ -346,7 +338,7 @@ function changeSceneColors() {
     text.style.color = "black";
     footer.setAttribute("style", "border-top: 1px solid black; color: black");
     if (currentScene !== 23) {
-        menu.style.display = "unset";
+        menu.style.display = "flex";
     }
     else if (currentScene === 23) {
         menu.style.display = "none";
@@ -466,13 +458,11 @@ function openingDoorBronzeKey() {
     actions[22].description = "The door is locked."
     actions[22].choices[0] = "Try the bronze key"
     actions[22].nextScene[0] = 13;
-    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
 } 
 function openingDoorSilverKey() {
     actions[22].description = "The door is locked."
     actions[22].choices[0] = "Try the silver key"
     actions[22].nextScene[0] = 12;
-    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
 } 
 function openingDoorBothKeys() {
     actions[22].description = "The door is locked."
@@ -480,7 +470,6 @@ function openingDoorBothKeys() {
     actions[22].nextScene[0] = 12;
     actions[22].choices[1] = "Try the bronze key"
     actions[22].nextScene[1] = 13;
-    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
 } 
 
 function openingDoorNoKeys() {

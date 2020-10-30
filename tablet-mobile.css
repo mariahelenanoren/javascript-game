@@ -1,0 +1,36 @@
+/* GRID WRAPPER: inner body */
+
+.wrapper {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 0.7fr 0.7fr 1fr 3rem;
+    grid-template-areas: 
+        "menu secondary-menu"
+        "text text"
+        "options options"
+        ". ."
+        "footer footer"
+    ;
+}
+
+.menu-container {
+    padding: 0.5rem 0.25rem 0.25rem 0.5rem;
+}
+.menu {
+    align-items: flex-start;
+    width: 100%;
+}
+.secondary-menu-container {
+    padding: 0.5rem 0.5rem 0.25rem 0.25rem;
+}
+.secondary-menu {
+    align-items: flex-end;
+    width: 100%;
+}
+.options {
+    width: 100%;
+    padding: 0 6%;
+}
+
+.button {
+    margin: 0.1rem;
+}

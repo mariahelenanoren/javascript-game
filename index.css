@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box!important;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -5,7 +9,6 @@ html, body {
 }
 
 body {
-    box-sizing: border-box;
     font-size: 0.9rem;
     font-family: 
     -apple-system, BlinkMacSystemFont,
@@ -20,8 +23,8 @@ body {
     height: 100%;
     background-color: #1e1e1e;
     transition: background-color 1s ease-in-out;
-    grid-template-columns: 0.8fr 1.4fr 0.8fr;
-    grid-template-rows: 1fr 1fr 4rem;
+    grid-template-columns: 0.9fr 1.2fr 0.9fr;
+    grid-template-rows: 1fr 1fr 3rem;
     grid-template-areas: 
         "menu text secondary-menu"
         "menu options secondary-menu"
@@ -42,6 +45,8 @@ body {
 .menu {
     width: 80%;
     display: none;
+    align-items: flex-end;
+    flex-wrap: nowrap;
 }
 
 /* TEXT SECTION */
@@ -71,13 +76,6 @@ body {
     width: 100%;
 }
 
-.first-option {
-
-}
-
-.second-option {
-}
-
 .user-inputs {
     justify-content: center;
     width: 100%;
@@ -101,7 +99,7 @@ body {
 /* FOOTER SECTION*/
 
 .footer {
-    height: 4rem;
+    height: 3rem;
     align-items: center;
     bottom: 0;
     color: white;
@@ -111,7 +109,7 @@ body {
 
 .footer p {
     margin-left: 2rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 
@@ -143,9 +141,9 @@ body {
 .button {
     width: 100%;
     max-width: 11rem;
-    padding: 0.7rem;
+    padding: 0.7rem 0.5rem;
     margin: 0.2rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     background-color: #ebebeb;
     border: 0.1rem solid #1e1e1e;
 }
