@@ -74,13 +74,13 @@ const actions = [
     },
     /* index 5 */
     pullString = {
-        description: "I pull the string.<br>The light goes on. I am in a cabin.<br>I can see a window, a door, a fireplace<br>and a table with some things on it.",
+        description: "I pull the string.<br>The light comes on. I am in a cabin.<br>I can see a window, a door, a fireplace<br>and a table with some things on it.",
         choices: [],
         nextScene: []
     },
     /* index 6 */
     theWindow = {
-        description: "I look out.<br>There is snow as far as the eye can see.",
+        description: "I look out.<br>There is snow as far as the eye can see.<br>The window is frosty.",
         choices: ["Write a message"],
         nextScene: [10]
     },

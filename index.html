@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="desktop.css">
     <link rel="stylesheet" href="tablet-mobile.css" media="(max-width: 768px)">
     <title>Escape</title>
     <script defer src="script.js"></script>
 </head>
 <body>
-
+    <!-- WRAPPER -->
     <div class="wrapper grid">
+        
+        <!-- MENU CONTAINER -->
         <div class="menu-container flex column">
+            <!-- menu -->
             <nav id="menu" class="menu column">
                 <button id="window" class="button">The window</button>
                 <button id="door" class="button">The door</button>
@@ -19,6 +22,8 @@
                 <button id="table" class="button">The table</button>
             </nav>
         </div>
+
+        <!-- DESCRIPTION CONTAINER -->
         <div class="text flex center">
             <p class="text-inner">
                 Its dark<br>
@@ -26,15 +31,24 @@
                 Where am I?<br>
             </p>
         </div>
+
+        <!-- OPTIONS CONTAINER -->
         <div class="options flex column">
+            <!-- INPUT FIELDS CONTAINER -->
             <div class="user-inputs flex">
+                <!-- this is where the input fields created in the javascript end up -->
             </div>
+            <!-- option buttons -->
             <div class="option-buttons button-container center row">
                 <button class="button first-option"></button>
                 <button class="button second-option"></button>
             </div>
+
         </div>
+
+        <!-- SECONDARY MENU CONTAINER -->
         <div class="secondary-menu-container button-container flex column">
+            <!-- secondary menu -->
             <nav class="secondary-menu button-container column">
                 <button class="button">The newspaper</button>
                 <button class="button">The key</button>
@@ -42,9 +56,12 @@
                 <button class="button">The pen</button>
             </nav>
         </div>
+
+        <!-- FOOTER -->
         <div class="footer flex">
             <p>ESCAPE</p>
         </div>
+
     </div>
 </body>
 </html>

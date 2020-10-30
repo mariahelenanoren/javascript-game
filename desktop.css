@@ -17,8 +17,9 @@ body {
     sans-serif;
 }
 
-/* GRID WRAPPER: inner body */
+/* WRAPPER */
 
+/* grid setup */
 .wrapper {
     height: 100%;
     background-color: #1e1e1e;
@@ -96,7 +97,7 @@ body {
     display: none;
 }
 
-/* FOOTER SECTION*/
+/* FOOTER SECTION */
 
 .footer {
     height: 3rem;
@@ -136,7 +137,7 @@ body {
     justify-content: center;
 }
 
-/* CLASSES FOR BUTTONS */
+/* classes for buttons */
 
 .button {
     width: 100%;

@@ -1,4 +1,7 @@
-/* GRID WRAPPER: inner body */
+/* Tablet and mobile styling */
+/* max-width: 768 px */
+
+/* WRAPPER */
 
 .wrapper {
     grid-template-columns: 1fr 1fr;
@@ -12,6 +15,7 @@
     ;
 }
 
+/* MENU */
 .menu-container {
     padding: 0.5rem 0.25rem 0.25rem 0.5rem;
 }
@@ -19,6 +23,9 @@
     align-items: flex-start;
     width: 100%;
 }
+
+/* SECONDARY MENU */
+
 .secondary-menu-container {
     padding: 0.5rem 0.5rem 0.25rem 0.25rem;
 }
@@ -26,10 +33,15 @@
     align-items: flex-end;
     width: 100%;
 }
+
+/* OPTION */
+
 .options {
     width: 100%;
     padding: 0 6%;
 }
+
+/* BUTTONS */
 
 .button {
     margin: 0.1rem;
