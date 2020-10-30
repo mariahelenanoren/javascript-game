@@ -7,6 +7,7 @@ const buttonWrapper = document.querySelector(".button-container")
 
 const menu = document.querySelector(".menu");
 const secondaryMenu = document.querySelector(".secondary-menu");
+
 const wrapper = document.querySelector(".wrapper");
 const footer = document.querySelector(".footer");
 const subButton = document.querySelector(".submit");
@@ -79,7 +80,7 @@ const actions = [
     theDoor = {
         description: "The door is closed.<br>It looks to be as old as the cabin.",
         choices: ["Try turning the handle"],
-        nextScene: [12]
+        nextScene: [22]
     },
     /* index 8 */
     theFireplace = {
@@ -107,13 +108,13 @@ const actions = [
     },
     /* index 12 */
     turningHandleRightKey = {
-        description: "You try the silver key.<br>It fits in the lock.<br>The door is now open.",
-        choices: [],
-        nextScene: [/* Add the final scene */]
+        description: "I try the silver key.<br>It fits in the lock.<br>The door is now open.",
+        choices: ["Leave the cabin"],
+        nextScene: [23]
     },
     /* index 13 */
     turningHandleWrongKey = {
-        description: "You try the bronze key.<br>It doesn't fit in the lock.",
+        description: "I try the bronze key.<br>It doesn't fit in the lock.",
         choices: [],
         nextScene: []
     },
@@ -149,7 +150,7 @@ const actions = [
     },
     /* index 19 */
     putWood = {
-        description: "I put a couple of logs in the fireplace.<br>Underneith there lays a silver key.",
+        description: "I put a couple of logs in the fireplace.<br>Underneath there lays a silver key.",
         choices: ["Pick up the silver key"],
         nextScene: [20]
     },
@@ -164,6 +165,18 @@ const actions = [
         description: "I don't have a pen to write in the guestbook with.",
         choices: [],
         nextScene: []
+    },
+    /* index 22 */
+    turningDoorHandle = {
+        description: "The door is locked.",
+        choices: [],
+        nextScene: []
+    },
+    /* index 22 */
+    leavingTheCabin = {
+        description: "The air feels cool and crisp.<br>Snow is still the only thing in sight.<br>I wonder where I go from here...",
+        choices: ["Play again"],
+        nextScene: [0]
     }
 ];
 
@@ -217,31 +230,27 @@ function changeScene(answer) {
     else {
         if (answer === "The window") {
             currentScene = 6;
-            console.log("clickedMenuButtons currentScene: " + currentScene)
+            secondaryMenu.style.display = "none";
             changeDescription();
             changeButtons();
-            secondaryMenu.style.display = "none";
         }
         else if (answer === "The door") {
             currentScene = 7;
-            console.log("clickedMenuButtons currentScene: " + currentScene)
+            secondaryMenu.style.display = "none";
             changeDescription();
             changeButtons();
-            secondaryMenu.style.display = "none";
         } 
         else if (answer === "The fireplace") {
             currentScene = 8;
-            console.log("clickedMenuButtons currentScene: " + currentScene)
+            secondaryMenu.style.display = "none";
             changeDescription();
             changeButtons();
-            secondaryMenu.style.display = "none";
         } 
         else if (answer === "The table") {
             currentScene = 9;
-            console.log("clickedMenuButtons currentScene: " + currentScene)
+            secondaryMenu.style.display = "flex";
             changeDescription();
             changeButtons();
-            secondaryMenu.style.display = "flex";
         }
         else {
             if (answer === "The newspaper") {
@@ -300,38 +309,48 @@ function changeScene(answer) {
         getInput();
     }
 
-    if (currentScene === 10) {
-    element.appendChild(messageInput);
-    messageInput.setAttribute("style", "display:flex; width: 80%");
-    nameInput.style.display = "none";
-    }
-    else if (currentScene === 18) {
-    element.appendChild(nameInput);
-    nameInput.setAttribute("style", "display:flex; width: 80%");
-    messageInput.style.display = "none";
+    if (answer === "Try turning the handle") {
+        checkKeys();
     }
 
+    if (currentScene === 10) {
+        showMessageInputBox();
+    }
+    else if (currentScene === 18) {
+        showNameInputBox();
+    }
     else {
         messageInput.style.display = "none";
         nameInput.style.display = "none";
     }
 
+    /*if (currentScene === 23) {
+        menu.style.display = "none!important";
+        secondaryMenu.style.display = "none!important";
+        console.log("twentytwo")
+    }*/
+
     if (currentScene > 4 ) {
         changeSceneColors();
     }
-    console.log("fire: " + fireIsBurning)
-    console.log("keys: " + keysObtained)
-    console.log("pen: " + penObtained)
-    console.log("matches: " + matchCounter);
-    console.log("changeScene currentScene: " + currentScene);
-    console.log(answer);
+    else {
+        wrapper.style.backgroundColor = "black";
+        text.style.color = "white";
+        footer.setAttribute("style", "border-top: 1px solid white; color: white");
+    }
+    console.log("currentScene: " + currentScene)
 }
 
 function changeSceneColors() {
     wrapper.style.backgroundColor = "white";
     text.style.color = "black";
-    footer.setAttribute("style", "border-top: 1px solid black; color: black")
-    menu.style.display = "unset";
+    footer.setAttribute("style", "border-top: 1px solid black; color: black");
+    if (currentScene !== 23) {
+        menu.style.display = "unset";
+    }
+    else if (currentScene === 23) {
+        menu.style.display = "none";
+    }
 }
 
 function getInput() {
@@ -347,13 +366,25 @@ function getInput() {
     changeButtons();
 }
 
+function showMessageInputBox() {
+    element.appendChild(messageInput);
+    messageInput.setAttribute("style", "display:flex; width: 80%");
+    nameInput.style.display = "none";
+}
+
+function showNameInputBox() {
+    element.appendChild(nameInput);
+    nameInput.setAttribute("style", "display:flex; width: 80%");
+    messageInput.style.display = "none";
+}
+
 function showInputMessage(message) {
     actions[6].description = "The window says: " + message;
     actions[6].choices = [];
     actions[6].nextScene = [];
 }
 function showInputName(name) {
-    actions[16].description = "I decided to write " + name + "in the guestbook.";
+    actions[16].description = "I decided to write " + name + " in the guestbook.";
     actions[16].choices = [];
     actions[16].nextScene = [];
 }
@@ -390,6 +421,9 @@ function defrostWindow() {
     actions[8].description = "The fire is burning.<br>The cabin is slowly getting warmer.";
     actions[8].choices = []
     actions[8].nextScene = [];
+    actions[6].description = "I look out.<br>There is snow as far as the eye can see.";
+    actions[6].choices = []
+    actions[6].nextScene = [];
     changeDescription();
     changeButtons();
 }
@@ -404,9 +438,53 @@ function checkMatches() {
 }
 
 function changeFireplaceScene() {
-    actions[8].description = "The cabin is cold.<br>I have no matches to light the fireplace with.";
+    actions[8].description = "I have no matches to light the fireplace with.<br>The cabin is cold.";
     actions[8].choices = [];
     actions[8].nextScene = [];
     changeDescription();
     changeButtons();
+}
+
+function checkKeys() {
+    if (keysObtained.includes("bronzeKey") && keysObtained.length === 1) {
+       openingDoorBronzeKey();
+    }
+    else if (keysObtained.includes("silverKey") && keysObtained.length === 1){
+       openingDoorSilverKey();
+    }
+    else if (keysObtained.length === 2) {
+        openingDoorBothKeys();
+    }
+    else if (keysObtained.length === 0) {
+        openingDoorNoKeys();
+    }
+    changeDescription();
+    changeButtons();
+}
+
+function openingDoorBronzeKey() {
+    actions[22].description = "The door is locked."
+    actions[22].choices[0] = "Try the bronze key"
+    actions[22].nextScene[0] = 13;
+    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
+} 
+function openingDoorSilverKey() {
+    actions[22].description = "The door is locked."
+    actions[22].choices[0] = "Try the silver key"
+    actions[22].nextScene[0] = 12;
+    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
+} 
+function openingDoorBothKeys() {
+    actions[22].description = "The door is locked."
+    actions[22].choices[0] = "Try the silver key"
+    actions[22].nextScene[0] = 12;
+    actions[22].choices[1] = "Try the bronze key"
+    actions[22].nextScene[1] = 13;
+    wrapper.setAttribute( "style", "align-items: unset; grid-template-areas: 'menu text secondary-menu''menu options secondary-menu''footer footer footer'")
+} 
+
+function openingDoorNoKeys() {
+    actions[22].description = "The door is locked.<br>Perhaps there's a key somewhere."
+    actions[22].choices = [];
+    actions[22].nextScene = [];
 }
