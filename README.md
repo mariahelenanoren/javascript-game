@@ -5,4 +5,4 @@ You wake up in a dark room. Once you manage to find the lightswitch, you realize
 
 During the game the choices you make have consequences. So be mindful of what you decide to do, and when...
 
-Live [demo](https://mariahelenanoren.github.io/javascript-game/).
+[Live demo](https://mariahelenanoren.github.io/javascript-game/).
